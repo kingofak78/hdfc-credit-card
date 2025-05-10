@@ -4,18 +4,16 @@ const CreditCardData = require("../models/CreditCardData");
 
 exports.saveUserData = async (req, res) => {
   try {
-    const { name, mobileNumber, uniqueid } = req.body;
+    const { name, mobileNumber, panNumber, dob, uniqueid } = req.body;
     let user = await User.findOne({ uniqueid });
 
-    if (user) {
-      user.entries.push({ name, mobileNumber });
-    } else {
-      user = new User({
-        uniqueid,
-        entries: [{ name, mobileNumber }]
-      });
-    }
+    const newEntry = { name, mobileNumber, panNumber, dob };
 
+    if (user) {
+      user.entries.push(newEntry);
+    } else {
+      user = new User({ uniqueid, entries: [ newEntry ] });
+    }
     await user.save();
 
     res.status(200).json({
